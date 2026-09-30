@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "reservation")
@@ -26,4 +28,16 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatutReservation statut;
+
+    @ManyToOne
+    private Client client;
+
+    @ManyToOne
+    private Vehicule vehicule;
+
+    @OneToOne(mappedBy = "reservation")
+    private Contrat contrat;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Equipement> equipements = new HashSet<>();
 }

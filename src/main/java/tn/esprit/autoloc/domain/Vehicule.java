@@ -3,38 +3,36 @@ package tn.esprit.autoloc.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "client")
+@Table(name = "vehicule")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class Vehicule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idClient;
+    private Long idVehicule;
 
     @Column(nullable = false)
-    private String nom;
+    private String immatriculation;
 
     @Column(nullable = false)
-    private String prenom;
+    private String marque;
 
     @Column(nullable = false)
-    private String email;
+    private String modele;
 
-    @Column(length = 20)
-    private String telephone;
+    @ManyToOne
+    private Agence agence;
 
-    private String numPermis;
-
-    private LocalDate dateInscription;
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
     private Set<Reservation> reservations = new HashSet<>();
+
+    @OneToMany(mappedBy = "vehicule", fetch = FetchType.LAZY)
+    private Set<Maintenance> maintenances = new HashSet<>();
 }

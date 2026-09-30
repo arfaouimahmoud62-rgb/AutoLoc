@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "contrat")
@@ -26,4 +28,10 @@ public class Contrat {
 
     @Column(nullable = false)
     private Boolean valide;
+
+    @OneToOne
+    private Reservation reservation;
+
+    @OneToMany(mappedBy = "contrat", fetch = FetchType.LAZY)
+    private Set<Paiement> paiements = new HashSet<>();
 }
